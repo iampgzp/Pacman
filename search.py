@@ -145,7 +145,31 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    actions = []
+    start = problem.getStartState()
+
+    # already start at goal
+    if problem.isGoalState(start):
+        return actions
+
+    # breadth first search iteratively
+    q = util.PriorityQueue() # note the lowest priority gets popped first
+    visited = []
+    q.push((start, visited, actions), 0)
+    while not q.isEmpty():
+        state, visited, actions = q.pop()
+        # reach goal
+        if problem.isGoalState(state):
+            return actions
+        # find adjacent cells
+        if state not in visited:
+            visited.append(state)
+            for successor, action, cost in problem.getSuccessors(state):
+                if successor not in visited:
+                    q.push((successor, visited, actions+[action]), cost)
+
+    return actions
+    #util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
     """
@@ -157,7 +181,32 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    actions = []
+    start = problem.getStartState()
+
+    # already start at goal
+    if problem.isGoalState(start):
+        return actions
+
+    # breadth first search iteratively
+    q = util.PriorityQueue() # note the lowest priority gets popped first
+    visited = []
+    q.push((start, visited, actions), 0)
+    while not q.isEmpty():
+        state, visited, actions = q.pop()
+        # reach goal
+        if problem.isGoalState(state):
+            return actions
+        # find adjacent cells
+        if state not in visited:
+            visited.append(state)
+            for successor, action, stepCost in problem.getSuccessors(state):
+                if successor not in visited:
+                    heuristicCost = heuristic(successor, problem)
+                    q.push((successor, visited, actions+[action]), stepCost+heuristicCost)
+
+    return actions
+    #util.raiseNotDefined()
 
 
 # Abbreviations
