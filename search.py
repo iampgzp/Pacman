@@ -106,10 +106,9 @@ def depthFirstSearch(problem):
         # find adjacent cells
         if state not in visited:
             visited.append(state)
-            for successor in problem.getSuccessors(state):
-                nstate, nmove, step = successor
-                if nstate not in visited:
-                    s.push((nstate, visited, actions+[nmove]))
+            for successor, action, _ in problem.getSuccessors(state):
+                if successor not in visited:
+                    s.push((successor, visited, actions+[action]))
     
     return actions
     #util.raiseNotDefined()
@@ -136,10 +135,9 @@ def breadthFirstSearch(problem):
         # find adjacent cells
         if state not in visited:
             visited.append(state)
-            for successor in problem.getSuccessors(state):
-                nstate, nmove, step = successor
-                if nstate not in visited:
-                    q.push((nstate, visited, actions+[nmove]))
+            for successor, action, _ in problem.getSuccessors(state):
+                if successor not in visited:
+                    q.push((successor, visited, actions+[action]))
 
     return actions
     #util.raiseNotDefined()
